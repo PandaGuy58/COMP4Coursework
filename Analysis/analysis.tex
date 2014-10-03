@@ -3,10 +3,10 @@
 \section{Introduction}
 
 \subsection{Client Identification} 
-My client is Tom Wolf, he is 46 and he is my A level ICT teacher. Tom teaches A level ICT, Doploma ICT and GCSE ICT at Long Road sixth form college. As he is an ICT teacher, he is very educated in computer related subjects, but his programming experience is relatively small and he is not able to write complex programs programs for himself
+My client is Tom Wolf, he is 46 years old and he is my A level ICT teacher. Tom teaches A level ICT, Doploma ICT and GCSE ICT at Long Road sixth form college. As he is an ICT teacher, he is very educated in computer related subjects, but his programming experience is relatively small and he is not able to write complex programs for himself.
 
 \subsection{Define the current system} 
-Currently the system is Tom himself and Google Drive and/or his hard drive on his laptop used to store calculated data. Tom is required to collect grades of student from the school system, use an algorithm to calculate his/her predicted grade, create a table using already purcheased software such as Microsoft Word and  insert new calculated data to the table. This is very time consuming, as he is required to repeat this process after few assignments.
+Currently the system is Tom himself and Google Drive and his hard drive on his laptop used to store calculated data. Tom is required to collect grades of students from the school system, use an algorithm to calculate his students predicted grades, create a table using already purcheased software such as Microsoft Word and  insert new calculated data to the table. This is very time consuming, as he is required to repeat this process after few assignments for all his students, which is every 2-3 weeks.
 
 \subsection{Section appendix}
 
@@ -34,15 +34,19 @@ Tom is required to calculate predicted grades for 200 students by himself and th
 \subsection{The current system}
 \subsubsection{Data sources and destinations}
 
-In the current system, after Tom marks his students' course work, assesments, etc., he then has to count up the total marks and write the grade in his markbook or google drive database. Then based on the mark scheme, he sets the grade (either in google drive or his markbook) and the predicted grade for the end of the year. Predicted grade has to be calculated every term, so this is a lot of effort as well (as there are 200 students in total).
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{./Analysis/images/DataSourcesandDestinations.pdf}
+\end{figure}
+
 
 \subsubsection{Algorithms}
 At this point I am aware of the following algorithms:
 -Calculating the end of the unit predicted grade
 
-<<<<<<< HEAD
+
 -Calculating the end of the unit predicted grade
 
+\begin{algorithm}[H]
 \SET{$Score$}{$0$}
 \For{$grade$}{$Assignment$}
      \If{$grade = "A*"$}
@@ -74,13 +78,11 @@ At this point I am aware of the following algorithms:
      \Set{$Score$}{$EndOfUnitG = "E"$}
 \Else
      \Set{$Score$}{$EndOfUnitG = "U"$}
-
-
-\begin{algorithm}[H]
-
-
+\end{algorithmic}
+\end{algorithm}
 -Calculating the end of the year predicted grade(for AS)
 
+\begin{algorithm}[H]
 \SET{$Score$}{$0$}
 \For{$grade$}{$Unit$}
      \If{$grade = "A*"$}
@@ -112,13 +114,33 @@ At this point I am aware of the following algorithms:
      \Set{$Score$}{$ASPredictedG = "E"$}
 \Else
      \Set{$Score$}{$ASPredictedG = "U"$}
-=======
+\end{algorithmic}
+\end{algorithm}
+
 -Calculating the end of the year predicted grade (for AS)
->>>>>>> branch 'master' of https://github.com/PandaGuy58/COMP4Coursework.git
 
 -Calculating end of the year predicted grade(for A2)
 
 -Calculating the grade
+
+\begin{algorithm}[H]
+\Set{$percent$}{$(AchievedMark / MaxMark) * 100$}
+\If{$percent > "90"$}
+       \SET{$grade$}{$A*$}
+\ElsIf{$percent = "80"$}
+       \Set{$grade$}{$A$}
+\ElsIf{$percent = "70"$}
+       \Set{$grade$}{$B$}
+\ElsIf{$percent = "60"$}
+       \Set{$grade$}{$C$}
+\ElsIf{$percent = "50"$}
+       \Set{$grade$}{$D$}
+\ElsIf{$percent = "40"$}
+       \Set{$grade$}{$E$}
+\Else
+       \Set{$grade$}{$U$}
+\end{algorithmic}
+\end{algorithm}
 
 -Calculating average predicted end of the year grade for the whole class
 
@@ -143,26 +165,27 @@ At this point I am aware of the following algorithms:
     \includegraphics[width=\textwidth]{./Analysis/images/DataFlowDiagrams2.pdf}
 \end{figure}
 
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{./Analysis/images/key.pdf}
-    \caption{This is the key for the following data flow diagrams.} \label{fig:data_flow_diagram_key}
-\end{figure}
-
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{./Analysis/images/DataFlowDiagrams.pdf}
-\end{figure}
-
-\begin{figure}[H]
-    \includegraphics[width=\textwidth]{./Analysis/images/DataFlowDiagrams2.pdf}
-\end{figure}
-
 \subsubsection{Input Forms, Output Forms, Report Formats}
+
+In the current system, students' work is an input form for Tom's students; based on this, Tom is able to calculate students' grades for assignments, from which he is then able to calculate other predicted grades, such as predicted end of the year grade and end of the unit grade.
+
+(This section is not fully finished)
 
 \subsection{The proposed system}
 
 \subsubsection{Data sources and destinations}
 
+In the proposed system, the data sources and destinations are exactly the same as in the current system, the only difference will be that the data which Tom had to calculate manually with now be done automatically by the proposed system.
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{./Analysis/images/DataSourcesandDestinations.pdf}
+\end{figure} 
+
 \subsubsection{Data flow diagram}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{./Analysis/images/222DataFlowDiagram.pdf}
+\end{figure}
 
 \subsubsection{Data dictionary}
 \begin{figure}[H]
@@ -217,19 +240,24 @@ The very final deadline for this task to be finished is Friday 17th April, this 
 
 \subsection{User Knowledge}
 
+As I mentioned in Client Identification, Tom has a lot of computer/IT experience, so he should be capable of using any system/program I will provide for him
+
 \subsection{Access restrictions}
 Because Tom has privilages to change student grades and predicted grades, the system should allow Tom to change those and also the system should be protected with a password or other form of security to prevent un-authorised access, such as students which have an intention of altering their grades.
 
 \section{Limitations}
 
 \subsection{Areas which will not be included in computerisation}
-All of the marking has to be done by Tom, entering the mark also has to be done by Tom, although the student names, surnames and emails could possibly be imported from the school database/network.
+All of the marking has to be done by Tom, entering the mark also has to be done by Tom.
 
 \subsection{Areas considered for future computerisation}
+The student names, surnames and emails could possibly be imported from the school database/network. Also, the grades and predicted grades could be sent automatically with a capable of doing this system.
 
 \section{Solutions}
 
 \subsection{Alternative solutions}
+
+I could write the program in python with the pyQt extension and install the database on internet, as it would be the most secure and Tom would not need to have the database file on his storage device as long as he would have access to internet.
 
 \subsection{Justification of chosen solution}To complete this project, I will use Python and PyQT python extension/module because I learned the basics of Python in AS computing and I am continuing computing this year, so my Python programming skills will also improve throughout the year and they will help me with this task. Additionally, my teacher Adam McNicol strongly recommended Python for the whole class and in the past when I had issues or could not understand Python, most of the time Adam McNicol was able to help me resolve any issue. So if I am going to have issues with Python when coding the system, hopefully Adam will be able to help me resolve them.
 
