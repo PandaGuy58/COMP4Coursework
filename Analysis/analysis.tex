@@ -41,79 +41,90 @@ Tom is required to calculate predicted grades for 200 students by himself and th
 
 \subsubsection{Algorithms}
 At this point I am aware of the following algorithms:
--Calculating the end of the unit predicted grade
-
-
--Calculating the end of the unit predicted grade
 
 \begin{algorithm}[H]
+\label{}
+    \caption{End of the unit predicted grade}
+\begin{algorithmic}[1]
 \SET{$Score$}{$0$}
 \For{$grade$}{$Assignment$}
      \If{$grade = "A*"$}
-          \Set{$Score$}{$Score+6$}
+          \SET{$Score$}{$Score+6$}
      \ElsIf{$grade = "A"$}
-          \Set{$Score$}{$Score+5$}
+          \SET{$Score$}{$Score+5$}
      \ElsIf{$grade = "B"$}
-          \Set{$Score$}{$Score+4$}
+          \SET{$Score$}{$Score+4$}
      \ElsIf{$grade = "C"$}
-          \Set{$Score$}{$Score+3$}
+          \SET{$Score$}{$Score+3$}
      \ElsIf{$grade = "D"$}
-          \Set{$Score$}{$Score+2$}
+          \SET{$Score$}{$Score+2$}
      \ElsIf{$grade = "E"$}
-          \Set{$Score$}{$Score+1$}
+          \SET{$Score$}{$Score+1$}
+\end{algorithmic}
 \EndFor
 \SET{$Score$}{$Score / length(assignments)$}
 
+
+\begin{algorithmic}[2]
 \If{$Score > 5.5$}
-     \Set{$Score$}${EndOfUnitG = "A*"$}
+     \SET{$Score$}${EndOfUnitG = "A*"$}
 \ElsIf{$Score > 4.5$}
-     \Set{$Score$}{$EndOfUnitG = "A"$}
+     \SET{$Score$}{$EndOfUnitG = "A"$}
 \ElsIf{$Score > 3.5$}
-     \Set{$Score$}{$EndOfUnitG = "B"$}
+     \SET{$Score$}{$EndOfUnitG = "B"$}
 \ElsIf{$Score > 2.5$}
-     \Set{$Score$}{$EndOfUnitG = "C"$}
+     \SET{$Score$}{$EndOfUnitG = "C"$}
 \ElsIf{$Score > 1.5$}
-     \Set{$Score$}{$EndOfUnitG = "D"$}
+     \SET{$Score$}{$EndOfUnitG = "D"$}
 \ElsIf{$Score > 0.5$}
-     \Set{$Score$}{$EndOfUnitG = "E"$}
+     \SET{$Score$}{$EndOfUnitG = "E"$}
 \Else
-     \Set{$Score$}{$EndOfUnitG = "U"$}
+     \SET{$Score$}{$EndOfUnitG = "U"$}
 \end{algorithmic}
 \end{algorithm}
--Calculating the end of the year predicted grade(for AS)
 
-\begin{algorithm}[H]
 \SET{$Score$}{$0$}
+\begin{algorithm}[H]
+\label{}
+    \caption{End of the year predicted grade(for AS)}
+\begin{algorithmic}[3]
 \For{$grade$}{$Unit$}
      \If{$grade = "A*"$}
-          \Set{$Score$}{$Score+6$}
+          \SET{$Score$}{$Score+6$}
      \ElsIf{$grade = "A"$}
-          \Set{$Score$}{$Score+5$}
+          \SET{$Score$}{$Score+5$}
      \ElsIf{$grade = "B"$}
-          \Set{$Score$}{$Score+4$}
+          \SET{$Score$}{$Score+4$}
      \ElsIf{$grade = "C"$}
-          \Set{$Score$}{$Score+3$}
+          \SET{$Score$}{$Score+3$}
      \ElsIf{$grade = "D"$}
-          \Set{$Score$}{$Score+2$}
+          \SET{$Score$}{$Score+2$}
      \ElsIf{$grade = "E"$}
-          \Set{$Score$}{$Score+1$}
+          \SET{$Score$}{$Score+1$}
+     
 \EndFor
+\end{algorithmic}
 \SET{$Score$}{$Score / length(units)$}
 
+\begin{algorithm}[H]
+\label{}
+    \caption{}
+\begin{algorithmic}[4]
+
 \If{$Score > 5.5$}
-     \Set{$Score$}${ASPredictedG = "A*"$}
+     \SET{$Score$}${ASPredictedG = "A*"$}
 \ElsIf{$Score > 4.5$}
-     \Set{$Score$}{$ASPredictedG = "A"$}
+     \SET{$Score$}{$ASPredictedG = "A"$}
 \ElsIf{$Score > 3.5$}
-     \Set{$Score$}{$ASPredictedG = "B"$}
+     \SET{$Score$}{$ASPredictedG = "B"$}
 \ElsIf{$Score > 2.5$}
-     \Set{$Score$}{$ASPredictedG = "C"$}
+     \SET{$Score$}{$ASPredictedG = "C"$}
 \ElsIf{$Score > 1.5$}
-     \Set{$Score$}{$ASPredictedG = "D"$}
+     \SET{$Score$}{$ASPredictedG = "D"$}
 \ElsIf{$Score > 0.5$}
-     \Set{$Score$}{$ASPredictedG = "E"$}
+     \SET{$Score$}{$ASPredictedG = "E"$}
 \Else
-     \Set{$Score$}{$ASPredictedG = "U"$}
+     \SET{$Score$}{$ASPredictedG = "U"$}
 \end{algorithmic}
 \end{algorithm}
 
@@ -121,24 +132,26 @@ At this point I am aware of the following algorithms:
 
 -Calculating end of the year predicted grade(for A2)
 
--Calculating the grade
 
 \begin{algorithm}[H]
-\Set{$percent$}{$(AchievedMark / MaxMark) * 100$}
+\label{}
+    \caption{Calculating the grade}
+\begin{algorithmic}[5]
+\SET{$percent$}{$(AchievedMark / MaxMark) * 100$}
 \If{$percent > "90"$}
        \SET{$grade$}{$A*$}
 \ElsIf{$percent = "80"$}
-       \Set{$grade$}{$A$}
+       \SET{$grade$}{$A$}
 \ElsIf{$percent = "70"$}
-       \Set{$grade$}{$B$}
+       \SET{$grade$}{$B$}
 \ElsIf{$percent = "60"$}
-       \Set{$grade$}{$C$}
+       \SET{$grade$}{$C$}
 \ElsIf{$percent = "50"$}
-       \Set{$grade$}{$D$}
+       \SET{$grade$}{$D$}
 \ElsIf{$percent = "40"$}
-       \Set{$grade$}{$E$}
+       \SET{$grade$}{$E$}
 \Else
-       \Set{$grade$}{$U$}
+       \SET{$grade$}{$U$}
 \end{algorithmic}
 \end{algorithm}
 
