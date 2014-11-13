@@ -1,0 +1,34 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.1)  5 NOV 2014 10:05
+entering extended mode
+**analysis.tex
+(U:\git\COMP4Coursework\Analysis\analysis.tex
+LaTeX2e <2014/05/01>
+Babel <3.9l> and hyphenation patterns for 68 languages loaded.
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 S
+     kip to content
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.1 S
+     kip to content
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+ 
+Here is how much of TeX's memory you used:
+ 8 strings out of 493705
+ 321 string characters out of 3142200
+ 52147 words of memory out of 3000000
+ 3428 multiletter control sequences out of 15000+200000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 1025 hyphenation exceptions out of 8191
+ 5i,0n,4p,31b,14s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
