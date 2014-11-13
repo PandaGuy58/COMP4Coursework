@@ -33,12 +33,30 @@
     \item Unit Name
 
 \subsection{Identification of all data output items}
+    \item Assignment Percentage Mark
+    \item Assignment Grade
+    \item End of the Year Predicted Grade
+    \item End of Unit Predicted Grade
+
 
 \subsection{Explanation of how data output items are generated}
-
+\begin{center}
+     \begin{tabular}{|p{4}|p{4}|p{8}}
+          \hline
+          \textbf{Output Item}  & \textbf{Required Items} & \textbf{Description} \\ \hline
+Assignment Achieved Grade & Percentage Grade & Achieved Grade is calculated from the Percentage grade, which is calculated first. Achieved Grade is calculated using the Achieved Grade Algorithim.
+\hline
+Percentage Grade & Assignment Maximum Mark, Assignment Achieved Mark & Percentage Grade = (Assignment Achieved Mark / Assignment Maximum Mark) * 100
+\hline
+End of the Year Predicted Grade & All End of Unit Assignments & This will be calculated using End of the Year Predicted Grade Algorithm.
+\hline 
+End of Unit Predicted Grade & All Assignment Grades & This required all Assignment Grades from the same unit to calculate the Predicted Grade for that unit
+\line
 \subsection{Data Dictionary}
 
 \subsection{Identification of appropriate storage media}
+
+For the storage media I am going to use a hard drive because it is very cheap, (not finished
 
 \section{Database Design}
 
