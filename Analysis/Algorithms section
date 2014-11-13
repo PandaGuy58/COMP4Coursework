@@ -1,0 +1,135 @@
+\begin{algorithm}[H]
+\label{}
+    \caption{End of the unit predicted grade}
+\begin{algorithmic}[1]
+\SET{$Score$}{$0$}
+\For{$grade$}{$Assignment$}
+     \If{$grade = "A*"$}
+          \Set{$Score$}{$Score+6$}
+     \ElsIf{$grade = "A"$}
+          \Set{$Score$}{$Score+5$}
+     \ElsIf{$grade = "B"$}
+          \Set{$Score$}{$Score+4$}
+     \ElsIf{$grade = "C"$}
+          \Set{$Score$}{$Score+3$}
+     \ElsIf{$grade = "D"$}
+          \Set{$Score$}{$Score+2$}
+     \ElsIf{$grade = "E"$}
+          \Set{$Score$}{$Score+1$}
+\end{algorithmic}
+\EndFor
+\SET{$Score$}{$Score / length(assignments)$}
+
+
+\begin{algorithmic}[1]
+\If{$Score > 5.5$}
+     \Set{$Score$}${EndOfUnitG = "A*"$}
+\ElsIf{$Score > 4.5$}
+     \Set{$Score$}{$EndOfUnitG = "A"$}
+\ElsIf{$Score > 3.5$}
+     \Set{$Score$}{$EndOfUnitG = "B"$}
+\ElsIf{$Score > 2.5$}
+     \Set{$Score$}{$EndOfUnitG = "C"$}
+\ElsIf{$Score > 1.5$}
+     \Set{$Score$}{$EndOfUnitG = "D"$}
+\ElsIf{$Score > 0.5$}
+     \Set{$Score$}{$EndOfUnitG = "E"$}
+\Else
+     \Set{$Score$}{$EndOfUnitG = "U"$}
+\end{algorithmic}
+\end{algorithm}
+
+\SET{$Score$}{$0$}
+\begin{algorithm}[H]
+\label{}
+    \caption{End of the year predicted grade(for AS)}
+\begin{algorithmic}[1]
+\For{$grade$}{$Unit$}
+     \If{$grade = "A*"$}
+          \Set{$Score$}{$Score+6$}
+     \ElsIf{$grade = "A"$}
+          \Set{$Score$}{$Score+5$}
+     \ElsIf{$grade = "B"$}
+          \Set{$Score$}{$Score+4$}
+     \ElsIf{$grade = "C"$}
+          \Set{$Score$}{$Score+3$}
+     \ElsIf{$grade = "D"$}
+          \Set{$Score$}{$Score+2$}
+     \ElsIf{$grade = "E"$}
+          \Set{$Score$}{$Score+1$}
+     
+\EndFor
+\end{algorithmic}
+\SET{$Score$}{$Score / length(units)$}
+
+\begin{algorithm}[H]
+\label{}
+    \caption{}
+\begin{algorithmic}[1]
+
+\If{$Score > 5.5$}
+     \Set{$Score$}${ASPredictedG = "A*"$}
+\ElsIf{$Score > 4.5$}
+     \Set{$Score$}{$ASPredictedG = "A"$}
+\ElsIf{$Score > 3.5$}
+     \Set{$Score$}{$ASPredictedG = "B"$}
+\ElsIf{$Score > 2.5$}
+     \Set{$Score$}{$ASPredictedG = "C"$}
+\ElsIf{$Score > 1.5$}
+     \Set{$Score$}{$ASPredictedG = "D"$}
+\ElsIf{$Score > 0.5$}
+     \Set{$Score$}{$ASPredictedG = "E"$}
+\Else
+     \Set{$Score$}{$ASPredictedG = "U"$}
+\end{algorithmic}
+\end{algorithm}
+
+-Calculating the end of the year predicted grade (for AS)
+
+-Calculating end of the year predicted grade(for A2)
+
+
+\begin{algorithm}[H]
+\label{}
+    \caption{Calculating the grade}
+\begin{algorithmic}[1]
+\Set{$percent$}{$(AchievedMark / MaxMark) * 100$}
+\If{$percent > "90"$}
+       \SET{$grade$}{$A*$}
+\ElsIf{$percent = "80"$}
+       \Set{$grade$}{$A$}
+\ElsIf{$percent = "70"$}
+       \Set{$grade$}{$B$}
+\ElsIf{$percent = "60"$}
+       \Set{$grade$}{$C$}
+\ElsIf{$percent = "50"$}
+       \Set{$grade$}{$D$}
+\ElsIf{$percent = "40"$}
+       \Set{$grade$}{$E$}
+\Else
+       \Set{$grade$}{$U$}
+\end{algorithmic}
+\end{algorithm}
+
+-Calculating average predicted end of the year grade for the whole class
+
+-Calculating average predicted  end of the unit grade for the whole class
+
+-Calculating average end of the year grade for the whole class
+
+
+
+\subsubsection{Data flow diagram}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{./Analysis/images/key.pdf}
+    \caption{This is the key for the following data flow diagrams.} \label{fig:data_flow_diagram_key}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{./Analysis/images/DataFlowDiagrams.pdf}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{./Analysis/images/DataFlowDiagrams2.pdf}
+\end{figure}
