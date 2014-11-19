@@ -31,17 +31,20 @@
     \item Achieved Assignment Mark
     \item Assignment Name
     \item Unit Name
+\end{itemize}
 
 \subsection{Identification of all data output items}
+\begin{itemize}
     \item Assignment Percentage Mark
     \item Assignment Grade
     \item End of the Year Predicted Grade
     \item End of Unit Predicted Grade
+\end{itemize}
 
 
 \subsection{Explanation of how data output items are generated}
 \begin{center}
-     \begin{tabular}{|p{4}|p{4}|p{8}}
+     \begin{tabular}{|p{4}|p{4}|p{8}|}
           \hline
           \textbf{Output Item}  & \textbf{Required Items} & \textbf{Description} \\ \hline
 Assignment Achieved Grade & Percentage Grade & Achieved Grade is calculated from the Percentage grade, which is calculated first. Achieved Grade is calculated using the Achieved Grade Algorithim.
@@ -52,6 +55,8 @@ End of the Year Predicted Grade & All End of Unit Assignments & This will be cal
 \hline 
 End of Unit Predicted Grade & All Assignment Grades & This required all Assignment Grades from the same unit to calculate the Predicted Grade for that unit
 \line
+    \end{tabular}
+\end{center}
 \subsection{Data Dictionary}
 
 \subsection{Identification of appropriate storage media}
@@ -66,7 +71,75 @@ For the storage media I am going to use a hard drive because it is very cheap, (
 
 \subsubsection{Entity Descriptions}
 
-\subsubsection{1NF to 3NF}
+\subsubsection{UNF to 3NF}
+
+\begin{center}
+     \begin{tabular}{|p{4}}|p{12}|
+          \hline
+          \textbf{Normalisation Stage} & \textbf{Normalised Attributes}
+\\ \hline
+
+UNF &
+\begin{itemize}
+      \item ClassID
+      \item ClassName
+      \item AssignmentID
+      \item AssignmentName
+      \item UnitID
+      \item UnitName
+      \item MaxMark
+      \item AchievedMark
+      \item StudentID
+      \item StudentName
+      \item StudentSurname
+\end{itemize}
+\hline
+
+Repeating and Non-Repeating Atributes &
+\begin{itemize}
+      \item\textbf(Repeating}
+      \item AssignmentID
+      \item AssignmentName
+      \item UnitID
+      \item UnitName
+      \item MaxMark
+      \item AchievedMark
+      \item StudentID
+      \item StudentName
+      \item StudentSurname
+
+      \item\textbf(Non-Repeating)
+      \item ClassID
+      \item ClassName
+\end{itemize}
+\hline
+
+Adding Primary Keys, (1NF) &
+\begin{itemize}
+      \item\underline{ClassID}
+      \item\underline{UnitID}
+      \item AssignmentName
+      \item AssignmentID
+      \item UnitName
+      \item MaxMark
+      \item AchievedMark
+      \item StudentID
+      \item StudentName
+      \item StudentSurname
+
+      \item\underline{ClassID}
+      \item ClassName
+
+\end{itemize}
+\hline
+
+2NF &
+
+
+
+    \end{tabular}
+\end{center}
+
 
 \section{Security and Integrity of the System and Data}
 
