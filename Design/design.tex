@@ -8,6 +8,8 @@
 
 \section{User Interface Designs}
 
+\section{Hardware Specification}
+
 \section{Program Structure}
 
 \subsection{Top-down design structure charts}
@@ -76,7 +78,7 @@ For the storage media I am going to use a hard drive because it is very cheap, (
 \begin{center}
      \begin{tabular}{|p{4}}|p{12}|
           \hline
-          \textbf{Normalisation Stage} & \textbf{Normalised Attributes}
+          \textbf{Normalisation Stage} & \textbf{}
 \\ \hline
 
 UNF &
@@ -85,10 +87,10 @@ UNF &
       \item ClassName
       \item AssignmentID
       \item AssignmentName
+      \item AssignmentMark
+      \item AssignmentMaxMark
       \item UnitID
       \item UnitName
-      \item MaxMark
-      \item AchievedMark
       \item StudentID
       \item StudentName
       \item StudentSurname
@@ -97,38 +99,13 @@ UNF &
 
 Repeating and Non-Repeating Atributes &
 \begin{itemize}
-      \item\textbf(Repeating}
-      \item AssignmentID
-      \item AssignmentName
-      \item UnitID
-      \item UnitName
-      \item MaxMark
-      \item AchievedMark
-      \item StudentID
-      \item StudentName
-      \item StudentSurname
 
-      \item\textbf(Non-Repeating)
-      \item ClassID
-      \item ClassName
 \end{itemize}
 \hline
 
 Adding Primary Keys, (1NF) &
 \begin{itemize}
-      \item\underline{ClassID}
-      \item\underline{UnitID}
-      \item AssignmentName
-      \item AssignmentID
-      \item UnitName
-      \item MaxMark
-      \item AchievedMark
-      \item StudentID
-      \item StudentName
-      \item StudentSurname
-
-      \item\underline{ClassID}
-      \item ClassName
+ 
 
 \end{itemize}
 \hline
