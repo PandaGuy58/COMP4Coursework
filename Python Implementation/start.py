@@ -69,5 +69,13 @@ def create_Student_table(db_name):
           primary key (StudentID))"""
     create_table(db_name,sql)
 
-if __name__ = "__main__":
-    pass
+if __name__ == "__main__":
+    db_name = "database_testing"
+    create_Class_table(db_name)
+    create_ClassUnits_table(db_name)
+    create_Unit_table(db_name)
+    create_UnitAssigments_table(db_name)
+    create_Assignment_table(db_name)
+    create_Teacher_table(db_name)
+    create_ClassStudents_table(db_name)
+    create_Student_table(db_name)
