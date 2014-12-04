@@ -71,7 +71,7 @@ def create_Student_table(db_name):
     create_table(db_name,sql)
 
 if __name__ == "__main__":
-    db_name = "database_testing"
+    db_name = "database_testing.db"
     create_Class_table(db_name)
     create_ClassUnits_table(db_name)
     create_Unit_table(db_name)
