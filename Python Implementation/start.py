@@ -44,6 +44,7 @@ def create_Assignment_table(db_name):
           AssignmentMark integer,
           AssignmentMaxMark integer,
           primary key(AssignmentID))"""
+    create_table(db_name,sql)
     
 def create_Teacher_table(db_name):
     sql = """create table Teacher
