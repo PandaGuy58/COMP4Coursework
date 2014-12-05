@@ -6,8 +6,8 @@ def create_table(db_name,sql):
         cursor.execute(sql)
         db.commit()
         
-def create_Class_table(db_name):
-    sql = """create table Class
+def create_Classes_table(db_name):
+    sql = """create table Classes
              (ClassID integer,
              ClassName String,
              TeacherID integer,
@@ -18,12 +18,13 @@ def create_Class_table(db_name):
 def create_ClassUnits_table(db_name):
     sql = """create table ClassUnits
              (ClassID integer,
-             ClassName string,
-             primary key(ClassID))"""
+             UnitID integer,
+             primary key(ClassID)
+             foreign key(UnitID) references Unit(UnitID))"""
     create_table(db_name,sql)
 
-def create_Unit_table(db_name):
-    sql = """create table Unit
+def create_Units_table(db_name):
+    sql = """create table Units
           (UnitID integer,
           UnitName string,
           primary key(UnitID))"""
@@ -37,7 +38,7 @@ def create_UnitAssigments_table(db_name):
           foreign key(AssignmentID) references Assignment(AssignmentID))"""
     create_table(db_name,sql)
 
-def create_Assignment_table(db_name):
+def create_Assignments_table(db_name):
     sql = """create table Assignments
           (AssignmentID integer,
           AssignmentName string,
@@ -46,8 +47,8 @@ def create_Assignment_table(db_name):
           primary key(AssignmentID))"""
     create_table(db_name,sql)
     
-def create_Teacher_table(db_name):
-    sql = """create table Teacher
+def create_Teachers_table(db_name):
+    sql = """create table Teachers
           (TeacherID integer,
           TeacherName string,
           TeacherSurname string,
@@ -62,8 +63,8 @@ def create_ClassStudents_table(db_name):
           foreign key(StudentID) references Student (StudentID))"""
     create_table(db_name,sql)
 
-def create_Student_table(db_name):
-    sql = """create table Student
+def create_Students_table(db_name):
+    sql = """create table Students
           (StudentID integer,
           StudentName string,
           StudentSurname string,
@@ -72,11 +73,11 @@ def create_Student_table(db_name):
 
 if __name__ == "__main__":
     db_name = "database_testing.db"
-    create_Class_table(db_name)
+    create_Classes_table(db_name)
     create_ClassUnits_table(db_name)
-    create_Unit_table(db_name)
+    create_Units_table(db_name)
     create_UnitAssigments_table(db_name)
-    create_Assignment_table(db_name)
-    create_Teacher_table(db_name)
+    create_Assignments_table(db_name)
+    create_Teachers_table(db_name)
     create_ClassStudents_table(db_name)
-    create_Student_table(db_name)
+    create_Students_table(db_name)
