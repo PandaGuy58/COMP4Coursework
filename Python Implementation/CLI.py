@@ -29,16 +29,18 @@ def create_Classes_table(db_name):
              ClassName String,
              TeacherID integer,
              primary key(ClassID),
-             foreign key(TeacherID) references Teacher(TeacherID))"""
+             foreign key(TeacherID) references Teacher(TeacherID))"""  
     create_table("Classes",db_name,sql)
 
     
 def create_ClassUnits_table(db_name):
     sql = """create table ClassUnits
-             (ClassID integer,
+             (ClassUnitID integer,
+             ClassID integer,
              UnitID integer,
-             primary key(ClassID)
-             foreign key(UnitID) references Unit(UnitID))"""
+             primary key(ClassUnitID),
+             foreign key(UnitID) references Units(UnitID),
+             foreign key(ClassID) references Classes(ClassID))"""
     create_table("ClassUnits",db_name,sql)
     
 def create_Units_table(db_name):
@@ -51,10 +53,12 @@ def create_Units_table(db_name):
     
 def create_UnitAssigments_table(db_name):
     sql = """create table UnitAssignments
-          (UnitID integer,
+          (UnitAssignmentID integer,
+          UnitID integer,
           AssignmentID integer,
-          primary key(UnitID),
-          foreign key(AssignmentID) references Assignment(AssignmentID))"""
+          primary key(UnitAssignmentID),
+          foreign key(AssignmentID) references Assignments(AssignmentID)
+          foreign key(UnitID) references Units(UnitID))"""
     create_table("UnitAssignments",db_name,sql)
     
 def create_Assignments_table(db_name):
@@ -76,10 +80,12 @@ def create_Teachers_table(db_name):
     
 def create_ClassStudents_table(db_name):
     sql = """create table ClassStudents
-          (ClassID integer,
+          (ClassStudentID integer,
+          ClassID integer,
           StudentID integer,
-          primary key(ClassID)
-          foreign key(StudentID) references Student (StudentID))"""
+          primary key(ClassStudentID)
+          foreign key(StudentID) references Students(StudentID)
+          foreign key(ClassID) references Classes(ClassID))"""
     create_table("ClassStudents",db_name,sql)
     
 def create_Students_table(db_name):
@@ -87,7 +93,7 @@ def create_Students_table(db_name):
           (StudentID integer,
           StudentName string,
           StudentSurname string,
-          primary key (StudentID))"""
+          primary key(StudentID))"""
     create_table("Students",db_name,sql)
     
 def userInput1(db_name):
@@ -142,7 +148,7 @@ def inspectID(db_name,select):
 
 def insert_Classes_data(db_name):
     select = "select TeacherID from Teachers"
-    sql = "insert into Classes (ClassName, TeacherID) values (?,?)"
+    sql = "insert into Classes(ClassName,TeacherID) values (?,?)"
     teacherIDs = []
     teacherIDs.append(inspectID(db_name,select))
     print("Teacher IDs in the database:")
@@ -150,23 +156,68 @@ def insert_Classes_data(db_name):
         print(each)
     Continue = True
     while Continue:
-        userInput = input("Enter a valid ID or press Q to exit: ")
+        userInput = input("Enter a valid teacherID or Q to exit: ")
         try:
-            userInput = userInput.upper()
-            if userInput == "Q":
-                Continue = False
-        except:
             userInput = int(userInput)
             if userInput in teacherIDs:
                 ClassName = input("Insert ClassName: ")
                 values = (ClassName,userInput)
                 insert_data(sql,values,db_name)
+                Continue = False
+        except:
+            userInput = userInput.upper()
+            if userInput == "Q":
+                Continue = False
 
 def insert_ClassUnits_data(db_name):
-    pass
+    select = "select ClassID from Class"
+    selectTwo = "select UnitID from Units"
+    classIDs = []
+    classIDs.append(inspectID(db_name,select))
+    unitIDs = []
+    unitIDs.append(inspectID(db_name,selectTwo))
 
+    for each in classIDs:
+        print(each)
+    Continue = True
+    while Continue:
+        userInputOne = input("Enter a valid classID or Q to exit")
+        try:
+            userInputOne = int(userInput)
+            if userInput in teacherIDs:
+                Continue = False
+                ContinueTwo = True
+            else:
+                print("teacherID not found")
+        except:
+            userInputOne = userInput.upper()
+            if userInput == "Q":
+                Continue = False
+                ContinueTwo = False
+                
+    if ContinueTwo:
+        for each in unitIDs:
+            print(each)
+            
+    while ContinueTwo:
+        userInputTwo = input("Enter a valid unitID or Q to exit")
+        try:
+            userInputTwo = int(userInputTwo)
+            if userInputTwo in unitIDs:
+                ContinueTwo = False
+            else:
+                print("unitID not found")
+        except:
+            userInputTwo = userInputTwo.upper()
+            if userInput = "Q":
+                ContinueTwo = False
+    if ContinueTwo:
+        sql = "insert into ClassUnits(ClassID,UnitID) values (?,?)"
+        values = (userInputOne,userInputTwo)
+        insert_data(sql,values,db_name)        
+              
 def insert_Units_data(db_name):
-    sql = "insert into Units (UnitName,) values (?)"
+    sql = "insert into Units(UnitName) values (?)"
     userInput = input("Enter the name of unit or Q to exit: ")
     if userInput != "q" or userInput != "Q":
         values = (userInput,)
@@ -176,10 +227,33 @@ def insert_UnitAssignments_data(db_name):
     pass
 
 def insert_Assignments_data(db_name):
-    sql = "insert into Assignments"
+    sql = "insert into Assignments(AssignmentName,AssignmentMark,AssignmentMaxMark) values (?,?,?)"
+    array = []
+    messages = ["Enter the AssignmentName or Q to exit","Enter the AssignmentMark or Q to exit","Enter the AssignmentMaxMark or Q to exit"]
+    Continue = True
+    counter = 0 
+    while Continue:
+        array.append(input(messages[counter]))
+        if array[counter] != "Q":
+            counter += 1
+        else:
+            Continue = False
+        if counter = 3:
+            Continue = False
+            values = (array[0],array[1],array[2])
+            insert_data(sql,values,db_name)
 
 def insert_Teachers_data(db_name):
-    pass
+    sql = "insert into Teachers(TeacherName,TeacherSurname) values (?,?)"
+    TeacherName = input("Enter the TeacherName or Q to exit: ")
+    Continue = True
+    if TeacherName == "Q" or TeacherName == "q":
+        Continue = False
+    if Continue:
+        TeacherSurname = input("Enter the TeacherSurname or Q to exit: ")
+        if TeacherName != "Q" and TeacherName != "q":
+            values = (TeacherName,TeacherSurname)
+            insert_data(sql,values,db_name)
 
 def insert_ClassStudents_data(db_name):
     pass
@@ -194,12 +268,20 @@ def userInput2(db_name):
     while Continue:
         print("Choose one of the following options: ")
         print("1. insert_Class_data")
-
+        print("2. insert_ClassUnits_data")
+        print("3. insert_Units_data")
+        print("4. insert_UnitAssignments_data")
+        print("5. insert_Assignments_data")
+        print("6. insert_Teachers_data")
+        print("7. insert_ClassStudents_data")
+        print("8. insert_Students_data")
         print("Q. Exit")
         print()
         userInput = input()
         if userInput == "1":
             insert_Classes_data(db_name)
+        elif userInput == "2":
+            insert_ClassUnits_data(db_name)
         elif userInput == "3":
             insert_Units_data(db_name)
         else:

@@ -17,10 +17,12 @@ def create_Classes_table(db_name):
 
 def create_ClassUnits_table(db_name):
     sql = """create table ClassUnits
-             (ClassID integer,
+             (ClassUnitID integer,
+             ClassID integer,
              UnitID integer,
-             primary key(ClassID)
-             foreign key(UnitID) references Unit(UnitID))"""
+             primary key(ClassUnitID),
+             foreign key(UnitID) references Units(UnitID),
+             foreign key(ClassID) references Classes(ClassID))"""
     create_table(db_name,sql)
 
 def create_Units_table(db_name):
@@ -32,10 +34,12 @@ def create_Units_table(db_name):
 
 def create_UnitAssigments_table(db_name):
     sql = """create table UnitAssignments
-          (UnitID integer,
+          (UnitAssignmentID integer,
+          UnitID integer,
           AssignmentID integer,
-          primary key(UnitID),
-          foreign key(AssignmentID) references Assignment(AssignmentID))"""
+          primary key(UnitAssignmentID),
+          foreign key(AssignmentID) references Assignments(AssignmentID)
+          foreign key(UnitID) references Units(UnitID))"""
     create_table(db_name,sql)
 
 def create_Assignments_table(db_name):
@@ -57,10 +61,12 @@ def create_Teachers_table(db_name):
 
 def create_ClassStudents_table(db_name):
     sql = """create table ClassStudents
-          (ClassID integer,
+          (ClassStudentID integer,
+          ClassID integer,
           StudentID integer,
-          primary key(ClassID)
-          foreign key(StudentID) references Student (StudentID))"""
+          primary key(ClassStudentID)
+          foreign key(StudentID) references Students(StudentID)
+          foreign key(ClassID) references Classes(ClassID))"""
     create_table(db_name,sql)
 
 def create_Students_table(db_name):
@@ -68,7 +74,7 @@ def create_Students_table(db_name):
           (StudentID integer,
           StudentName string,
           StudentSurname string,
-          primary key (StudentID))"""
+          primary key(StudentID))"""
     create_table(db_name,sql)
 
 if __name__ == "__main__":
