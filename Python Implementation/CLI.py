@@ -228,7 +228,7 @@ def insert_Units_data(db_name):
 
 def insert_UnitAssignments_data(db_name):
     select = "select UnitID from Units"
-    selectTwo = "select AssignmenID from Assignments"
+    selectTwo = "select AssignmentID from Assignments"
     UnitIDs = []
     UnitIDs.append(inspectID(db_name,select))
     AssignmentIDs = []
@@ -328,7 +328,24 @@ def insert_ClassStudents_data(db_name):
             if userInputOne == "Q":
                 Continue = False
                 ContinueTwo = False
-    
+    if ContinueTwo:
+        print("StudentIDs in Students: ")
+        for each in StudentIDs:
+            print(each)
+    while ContinueTwo:
+        userInputTwo = input("Enter a valid AssignmenID or Q to exit: ")
+        try:
+            userInputTwo = int(userInputTwo)
+            if userInputTwo in AssignmentIDs:
+                ContinueTwo = False
+                values = (userInputOne,userInputTwo)
+                insert_data(sql,values,db_name)
+            else:
+                print("AssignmentID not valid")
+        except:
+            userInputTwo = userInputTwo.upper()
+            if userInput == "Q":
+                ContinueTwo = False          
 
 def insert_Students_data(db_name):
     sql = "insert into Students(StudentName,StudentSurname) values(?,?)"
