@@ -132,6 +132,8 @@ def userInput1(db_name):
             userInput = userInput.upper()
             if userInput == "Q":
                 Continue = False
+            else:
+                print("Invalid input")                
 
 def insert_data(sql,values,db_name):
     with sqlite3.connect(db_name) as db:
@@ -144,22 +146,29 @@ def inspectID(db_name,select):
         cursor = db.cursor()
         cursor.execute(select)
         IDs = cursor.fetchall()
-        return IDs
+        try:
+            return IDs[0][0]
+        except IndexError:
+            print("No IDs in the selected table: ")
 
 def insert_Classes_data(db_name):
     select = "select TeacherID from Teachers"
     sql = "insert into Classes(ClassName,TeacherID) values (?,?)"
-    teacherIDs = []
-    teacherIDs.append(inspectID(db_name,select))
-    print("TeacherIDs in the Teachers table:")
-    for each in teacherIDs:
-        print(each)
+    TeacherIDs = []
+    TeacherIDs.append(inspectID(db_name,select))
     Continue = True
+    if len(TeacherIDs) != 0:
+        print("TeacherIDs in the Teachers:")
+        for each in TeacherIDs:
+            print(each)
+    else:
+        print("No TeacherIDs in Teachers")
+        Continue = False
     while Continue:
         userInput = input("Enter a valid TeacherID or Q to exit: ")
         try:
             userInput = int(userInput)
-            if userInput in teacherIDs:
+            if userInput in TeacherIDs:
                 ClassName = input("Insert ClassName: ")
                 values = (ClassName,userInput)
                 insert_data(sql,values,db_name)
@@ -174,21 +183,26 @@ def insert_Classes_data(db_name):
 def insert_ClassUnits_data(db_name):
     select = "select ClassID from Classes"
     selectTwo = "select UnitID from Units"
-    classIDs = []
-    classIDs.append(inspectID(db_name,select))
-    unitIDs = []
-    unitIDs.append(inspectID(db_name,selectTwo))
+    ClassIDs = []
+    ClassIDs.append(inspectID(db_name,select))
+    UnitIDs = []
+    UnitIDs.append(inspectID(db_name,selectTwo))
     sql = "insert into ClassUnits(ClassID,UnitID) values (?,?)"
-
     print("ClassIDs in the Classes table: ")
-    for each in classIDs:
-        print(each)
     Continue = True
+    ContinueTwo = False
+    if len(ClassIDs) == 0:
+        print("No ClassIDs in Classes")
+        Continue = False
+    else:
+        print("ClassIDs in Classes: ")
+        for each in ClassIDs:
+            print(each)
     while Continue:
         userInputOne = input("Enter a valid classID or Q to exit: ")
         try:
             userInputOne = int(userInputOne)
-            if userInput in teacherIDs:
+            if userInputOne in ClassIDs:
                 Continue = False
                 ContinueTwo = True
             else:
@@ -197,18 +211,21 @@ def insert_ClassUnits_data(db_name):
             userInputOne = userInputOne.upper()
             if userInputOne == "Q":
                 Continue = False
-                ContinueTwo = False
                 
     if ContinueTwo:
-        print("UnitIDs in the Units table: ")
-        for each in unitIDs:
-            print(each)
+        if len(UnitIDs) != 0:
+            print("UnitIDs in Units: ")
+            for each in UnitIDs:
+                print(each)
+        else:
+            print("No UnitIDs in Units")
+            
             
     while ContinueTwo:
-        userInputTwo = input("Enter a valid unitID or Q to exit")
+        userInputTwo = input("Enter a valid unitID or Q to exit: ")
         try:
             userInputTwo = int(userInputTwo)
-            if userInputTwo in unitIDs:
+            if userInputTwo in UnitIDs:
                 ContinueTwo = False
                 values = (userInputOne,userInputTwo)
                 insert_data(sql,values,db_name)
@@ -234,29 +251,37 @@ def insert_UnitAssignments_data(db_name):
     AssignmentIDs = []
     AssignmentIDs.append(inspectID(db_name,selectTwo))
     sql = "insert into UnitAssignments(UnitID,AssignmentID) values (?,?)"
-    print("UnitIDs in Units table: ") 
-    for each in UnitIDs:
-        print(each)
+    print("UnitIDs in Units table: ")
     Continue = True
+    ContinueTwo = False
+    if len(UnitIDs) == 0:
+        print("No UnitIDs in Units")
+        Continue = False
+    else:
+        for each in UnitIDs:
+            print(each)
     while Continue:
         userInputOne = input("Enter a valid UnitID or Q to exit: ")
         try:
             userInputOne = int(userInputOne)
-            if userInput in teacher:
+            if userInputOne in UnitIDs:
                 Continue = False
                 ContinueTwo = True
             else:
                 print("UnitID not found")
         except:
             userInputOne = userInputOne.upper()
-            if userInput == "Q":
+            if userInputOne == "Q":
                 Continue = False
-                ContinueTwo = False
                 
     if ContinueTwo:
-        print("AssignmentIDs in the Assignments table: ")
-        for each in AssignmentIDs:
-            print(each)
+        if len(AssignmentIDs) == 0:
+            print("No AssignmentIDs in Assignments")
+            ContinueTwo = False
+        else:
+            print("AssignmentIDs in Assignments: ")
+            for each in AssignmentIDs:
+                print(each)
 
     while ContinueTwo:
         userInputTwo = input("Enter a valid AssignmenID or Q to exit: ")
@@ -276,7 +301,7 @@ def insert_UnitAssignments_data(db_name):
 def insert_Assignments_data(db_name):
     sql = "insert into Assignments(AssignmentName,AssignmentMark,AssignmentMaxMark) values (?,?,?)"
     array = []
-    messages = ["Enter the AssignmentName or Q to exit","Enter the AssignmentMark or Q to exit","Enter the AssignmentMaxMark or Q to exit"]
+    messages = ["Enter the AssignmentName or Q to exit: ","Enter the AssignmentMark or Q to exit: ","Enter the AssignmentMaxMark or Q to exit: "]
     Continue = True
     counter = 0 
     while Continue:
@@ -311,9 +336,14 @@ def insert_ClassStudents_data(db_name):
     StudentIDs = []
     StudentIDs.append(inspectID(db_name,selectTwo))
     print("ClassIDs in Classes: ")
-    for each in StudentIDs:
-        print(each)
     Continue = True
+    ContinueTwo = False
+    if len(StudentIDs) == 0:
+        print("No ClassIDs in Classes")
+        Continue = False
+    else:
+        for each in StudentIDs:
+            print(each)
     while Continue:
         userInputOne = input("Enter a valid ClassID or Q to exit: ")
         try:
@@ -327,24 +357,28 @@ def insert_ClassStudents_data(db_name):
             userInputOne = userInputOne.upper()
             if userInputOne == "Q":
                 Continue = False
-                ContinueTwo = False
+
     if ContinueTwo:
         print("StudentIDs in Students: ")
-        for each in StudentIDs:
-            print(each)
+        if len(StudentIDs) == 0:
+            print("No StudentIDs in Students")
+            ContinueTwo = False
+        else:
+            for each in StudentIDs:
+                print(each)
     while ContinueTwo:
-        userInputTwo = input("Enter a valid AssignmenID or Q to exit: ")
+        userInputTwo = input("Enter a valid StudentID or Q to exit: ")
         try:
             userInputTwo = int(userInputTwo)
-            if userInputTwo in AssignmentIDs:
+            if userInputTwo in StudentIDs:
                 ContinueTwo = False
                 values = (userInputOne,userInputTwo)
                 insert_data(sql,values,db_name)
             else:
-                print("AssignmentID not valid")
+                print("StudentID not valid")
         except:
             userInputTwo = userInputTwo.upper()
-            if userInput == "Q":
+            if userInputTwo == "Q":
                 ContinueTwo = False          
 
 def insert_Students_data(db_name):
@@ -363,7 +397,7 @@ def userInput2(db_name):
     Continue = True
     while Continue:
         print("Choose one of the following options: ")
-        print("1. insert_Class_data")
+        print("1. insert_Classes_data")
         print("2. insert_ClassUnits_data")
         print("3. insert_Units_data")
         print("4. insert_UnitAssignments_data")
@@ -393,7 +427,74 @@ def userInput2(db_name):
         else:
             userInput = userInput.upper()
             if userInput == "Q":
-                Continue = False        
+                Continue = False
+            else:
+                print("Invalid input")
+
+def userInput3(db_name):
+    pass
+
+def delete_Classes_data(db_name):
+    pass
+
+def delete_ClassUnits_data(db_name):
+    pass
+
+def delete_Units_data(db_name):
+    pass
+
+def delete_UnitAssignments_data(db_name):
+    pass
+
+def delete_Assignments_data(db_name):
+    pass
+
+def delete_Teachers_data(db_name):
+    pass
+
+def delete_ClassStudents_data(db_name):
+    pass
+
+def delete_Students_data(db_name):
+    pass
+
+def userInput4(db_name):
+    Continue = True
+    while Continue:
+        print("Choose one of the following options: ")
+        print("1. delete_Classes_data")
+        print("2. delete_ClassUnits_data")
+        print("3. delete_Units_data")
+        print("4. delete_UnitAssignments_data")
+        print("5. delete_Assignments_data")
+        print("6. delete_Teachers_data")
+        print("7. delete_ClassStudents_data")
+        print("8. delete_Students_data")
+        print("Q. Exit")
+        print()
+        userInput = input()
+        if userInput == "1":
+            insert_Classes_data(db_name)
+        elif userInput == "2":
+            insert_ClassUnits_data(db_name)
+        elif userInput == "3":
+            insert_Units_data(db_name)
+        elif userInput == "4":
+            insert_UnitAssignments_data(db_name)
+        elif userInput == "5":
+            insert_Assignments_data(db_name)
+        elif userInput == "6":
+            insert_Teachers_data(db_name)
+        elif userInput == "7":
+            insert_ClassStudents_data(db_name)
+        elif userInput == "8":
+            insert_Students_data(db_name)
+        else:
+            userInput = userInput.upper()
+            if userInput == "Q":
+                Continue = False
+            else:
+                print("Invalid input")
 
 def main(db_name):
     print("Welcome to CLI for electronic markbook system")
@@ -403,6 +504,8 @@ def main(db_name):
         print("Choose one of the following options: ")
         print("1. (Re)create a table")
         print("2. Enter data")
+        print("3. Update data")
+        print("4. Delete data")
         print("Q. Exit")
         print()
         userInput = input()
@@ -411,13 +514,11 @@ def main(db_name):
         elif userInput == "2":
             userInput2(db_name)
         else:
-            try:
-                userInput = userInput.upper()
-                if userInput == "Q" or userInput == "q":
-                    Continue = False
-            except:
+            userInput = userInput.upper()
+            if userInput == "Q" or userInput == "q":
+                Continue = False
+            else:
                 print("Invalid Input")
-                print()
 
 if __name__ == "__main__":
     db_name = "database_testing.db"
