@@ -306,17 +306,33 @@ def insert_Assignments_data(db_name):
     List = []
     messages = ["Enter the AssignmentName or Q to exit: ","Enter the AssignmentMark or Q to exit: ","Enter the AssignmentMaxMark or Q to exit: "]
     Continue = True
-    counter = 0 
-    while Continue:
-        List.append(input(messages[counter]))
-        if List[counter] != "Q" or List[counter] != "q":
-            Continue = False
-        else:
-            counter += 1
-        if counter == 3 and Continue:
-            Continue = False
-            values = (List[0],List[1],List[2])
-            insert_data(sql,values,db_name)
+    ContinueTwo = True
+    userInput = input(messages[0])
+    if userInput.upper() != "Q":
+        List.append(userInput)
+        while  Continue:
+            userInput = input(messages[1])
+            if userInput.upper() == "Q":
+                Continue = False
+            else:
+                try:
+                    List.append(int(userInput))
+                    Continue = False
+                    while ContinueTwo:
+                        userInput = input(messages[2])
+                        if userInput.upper() == "Q":
+                            Continue = False
+                        else:
+                            try:
+                                List.append(int(userInput))
+                                ContinueTwo = False
+                                values = (List[0],List[1],List[2])
+                                insert_data(sql,values,db_name)
+                            except:
+                                print("You must enter an integer")
+                except:
+                    print("You must enter an integer")
+
 
 def insert_Teachers_data(db_name):
     sql = "insert into Teachers(TeacherName,TeacherSurname) values (?,?)"
@@ -434,32 +450,113 @@ def userInput2(db_name):
             else:
                 print("Invalid input")
 
+def amend_data(db_name,sql,values):
+    with sqlite3.connect(db_name) as db:
+        cursor = db.cursor()
+        cursor.execute(sql,values)
+        db.commit()
+
 def amend_Classes_data(db_name):
-    pass
+    select = "select ClassID from Classes"
+    IDs = inspectID(db_name,select)
+    sql = "update Classes set ClassName=?, TeacherID=? where ClassID=?"
+    Continue = True
+    ContinueTwo = True
+    try:
+        if len(IDs) != 0:
+            print("ClassIDs in Classes:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                validID = input("Enter a valid ID or Q to exit: ")
+                if validID.upper == "Q":
+                    Continue = False
+                else:
+                    try:
+                        if int(validID) in IDs:
+                            Continue = False
+                        else:
+                            print("Invalid ID")
+                    except:
+                        print("Invalid input")
+                        
+                            
+    except:
+        print("No ClassIDs in Classes")
+        
 
 def amend_ClassUnits_data(db_name):
-    pass
+    select = "select ClassUnitID from ClassUnits"
+    IDs = inspectID(db_name,select)
+    sql = "update ClassUnits set ClassID=?, UnitID=? where ClassUnitID=?"
 
 def amend_Units_data(db_name):
-    pass
+    select = "select UnitID from Units"
+    IDs = inspectID(db_name,select)
+    sql = "update Units set UnitName=? where UnitID=?"
 
 def amend_UnitAssignments_data(db_name):
-    pass
+    select = "select UnitAssignmentID from UnitAssignments"
+    IDs = inspectID(db_name,select)
+    sql = "update UnitAssignments set UnitID=?, AssignmnentID=? where UnitAssignmentID=?"
 
 def amend_Assignments_data(db_name):
-    pass
+    select = "select AssignmentID from Assignments"
+    IDs = inspectID(db_name,select)
+    sql = "update Assignments set AssignmentName=?, AssignmentMark=?, AssignmentMaxMark=? where AssignmentID=?"
 
 def amend_Teachers_data(db_name):
-    pass
+    select = "select TeacherID from Teachers"
+    IDs = inspectID(db_name,select)
+    sql = "update Teachers set TeacherName=?, TeacherSurname=? where TeacherID=?"
 
 def amend_ClassStudents_data(db_name):
-    pass
+    select = "select ClassStudentID from ClassStudents"
+    IDs = inspectID(db_name,select)
+    sql = "update ClassStudents set ClassID=?, StudentID=? where ClassStudentID=?"
 
 def amend_Students_data(db_name):
-    pass
+    select = "select StudentID from Students"
+    IDs = inspectID(db_name,select)
+    sql = "update Students StudentName=?, StudentSurname=? where StudentID=?"
 
 def userInput3(db_name):
-    pass
+    Continue = True
+    while Continue:
+        print("Choose one of the following options: ")
+        print("1. amend_Classes_data")
+        print("2. amend_ClassUnits_data")
+        print("3. amend_Units_data")
+        print("4. amend_UnitAssignments_data")
+        print("5. amend_Assignments_data")
+        print("6. amend_Teachers_data")
+        print("7. amend_ClassStudents_data")
+        print("8. amend_Students_data")
+        print("Q. Exit")
+        print()
+        userInput = input()
+        if userInput == "1":
+            amend_Classes_data(db_name)
+        elif userInput == "2":
+            amend_ClassUnits_data(db_name)
+        elif userInput == "3":
+            amend_Units_data(db_name)
+        elif userInput == "4":
+            amend_UnitAssignments_data(db_name)
+        elif userInput == "5":
+            amend_Assignments_data(db_name)
+        elif userInput == "6":
+            amend_Teachers_data(db_name)
+        elif userInput == "7":
+            amend_ClassStudents_data(db_name)
+        elif userInput == "8":
+            amend_Students_data(db_name)
+        else:
+            userInput = userInput.upper()
+            if userInput == "Q":
+                Continue = False
+            else:
+                print("Invalid input")
 
 def delete_data(db_name,sql,data):
     with sqlite3.connect(db_name) as db:
