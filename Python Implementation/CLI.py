@@ -146,8 +146,11 @@ def inspectID(db_name,select):
         cursor = db.cursor()
         cursor.execute(select)
         IDs = cursor.fetchall()
+        List = []
         try:
-            return IDs[0][0]
+            for each in IDs:
+                List.append(each[0])
+            return List
         except IndexError:
             print("No IDs in the selected table: ")
 
@@ -155,7 +158,7 @@ def insert_Classes_data(db_name):
     select = "select TeacherID from Teachers"
     sql = "insert into Classes(ClassName,TeacherID) values (?,?)"
     TeacherIDs = []
-    TeacherIDs.append(inspectID(db_name,select))
+    TeacherIDs = inspectID(db_name,select)
     Continue = True
     if len(TeacherIDs) != 0:
         print("TeacherIDs in the Teachers:")
@@ -184,9 +187,9 @@ def insert_ClassUnits_data(db_name):
     select = "select ClassID from Classes"
     selectTwo = "select UnitID from Units"
     ClassIDs = []
-    ClassIDs.append(inspectID(db_name,select))
+    ClassIDs = inspectID(db_name,select)
     UnitIDs = []
-    UnitIDs.append(inspectID(db_name,selectTwo))
+    UnitIDs = inspectID(db_name,selectTwo)
     sql = "insert into ClassUnits(ClassID,UnitID) values (?,?)"
     print("ClassIDs in the Classes table: ")
     Continue = True
@@ -247,11 +250,11 @@ def insert_UnitAssignments_data(db_name):
     select = "select UnitID from Units"
     selectTwo = "select AssignmentID from Assignments"
     UnitIDs = []
-    UnitIDs.append(inspectID(db_name,select))
+    UnitIDs = inspectID(db_name,select)
     AssignmentIDs = []
-    AssignmentIDs.append(inspectID(db_name,selectTwo))
+    AssignmentIDs = inspectID(db_name,selectTwo)
     sql = "insert into UnitAssignments(UnitID,AssignmentID) values (?,?)"
-    print("UnitIDs in Units table: ")
+    print("UnitIDs in Units: ")
     Continue = True
     ContinueTwo = False
     if len(UnitIDs) == 0:
@@ -300,19 +303,19 @@ def insert_UnitAssignments_data(db_name):
 
 def insert_Assignments_data(db_name):
     sql = "insert into Assignments(AssignmentName,AssignmentMark,AssignmentMaxMark) values (?,?,?)"
-    array = []
+    List = []
     messages = ["Enter the AssignmentName or Q to exit: ","Enter the AssignmentMark or Q to exit: ","Enter the AssignmentMaxMark or Q to exit: "]
     Continue = True
     counter = 0 
     while Continue:
-        array.append(input(messages[counter]))
-        if array[counter] != "Q":
-            counter += 1
+        List.append(input(messages[counter]))
+        if List[counter] != "Q" or List[counter] != "q":
+            Continue = False
         else:
+            counter += 1
+        if counter == 3 and Continue:
             Continue = False
-        if counter == 3:
-            Continue = False
-            values = (array[0],array[1],array[2])
+            values = (List[0],List[1],List[2])
             insert_data(sql,values,db_name)
 
 def insert_Teachers_data(db_name):
@@ -332,9 +335,9 @@ def insert_ClassStudents_data(db_name):
     select = "select ClassID from Classes"
     selectTwo = "select StudentID from Students"
     ClassIDs = []
-    ClassIDs.append(inspectID(db_name,select))
+    ClassIDs = inspectID(db_name,select)
     StudentIDs = []
-    StudentIDs.append(inspectID(db_name,selectTwo))
+    StudentIDs = inspectID(db_name,selectTwo)
     print("ClassIDs in Classes: ")
     Continue = True
     ContinueTwo = False
@@ -431,32 +434,246 @@ def userInput2(db_name):
             else:
                 print("Invalid input")
 
+def amend_Classes_data(db_name):
+    pass
+
+def amend_ClassUnits_data(db_name):
+    pass
+
+def amend_Units_data(db_name):
+    pass
+
+def amend_UnitAssignments_data(db_name):
+    pass
+
+def amend_Assignments_data(db_name):
+    pass
+
+def amend_Teachers_data(db_name):
+    pass
+
+def amend_ClassStudents_data(db_name):
+    pass
+
+def amend_Students_data(db_name):
+    pass
+
 def userInput3(db_name):
     pass
 
+def delete_data(db_name,sql,data):
+    with sqlite3.connect(db_name) as db:
+        cursor = db.cursor()
+        cursor.execute(sql,data)
+        db.commit()
+        
 def delete_Classes_data(db_name):
-    pass
+    sql = "delete from Classes where ClassID=?"
+    select = "select ClassID from Classes"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("ClassIDs in Classes:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid ClassID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid ClassID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No ClassIDs in Classes")
 
 def delete_ClassUnits_data(db_name):
-    pass
+    sql = "delete from ClassUnits where ClassUnitID=?"
+    select = "select ClassUnitID from ClassUnits"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("ClassUnitIDs in ClassUnits:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid ClassUnitID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid ClassUnitID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No ClassUnitIDs in ClassUnits")
 
 def delete_Units_data(db_name):
-    pass
+    sql = "delete from Units where UnitID=?"
+    select = "select UnitID from Units"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("UnitIDs in Units:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid UnitID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid UnitID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No UnitIDs in Units")
 
 def delete_UnitAssignments_data(db_name):
-    pass
+    sql = "delete from UnitAssignments where UnitAssignmentID=?"
+    select = "select UnitAssignmentID from UnitAssignments"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("UnitAssignmentIDs in UnitAssignments:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid UnitAssignmentID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid UnitAssignmentID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No ClassIDs in Classes")
 
 def delete_Assignments_data(db_name):
-    pass
+    sql = "delete from Assignments where AssignmentID=?"
+    select = "select AssignmentID from Assignments"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("AssignmentIDs in Assignments:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid AssignmentID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid AssignmentID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No AssignmentID in Assignments")
 
 def delete_Teachers_data(db_name):
-    pass
+    sql = "delete from Teachers where TeacherID=?"
+    select = "select TeacherID from Teachers"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("TeacherID in Teachers:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid TeacherID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid TeacherID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No TeacherIDs in Teachers")
 
 def delete_ClassStudents_data(db_name):
-    pass
-
+    sql = "delete from ClassStudents where ClassStudentID=?"
+    select = "select ClassStudentID from ClassStudents"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("ClassStudentIDs in ClassStudents:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid ClassStudentID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid ClassStudentID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No ClassStudentIDs in ClassStudents")
+    
 def delete_Students_data(db_name):
-    pass
+    sql = "delete from Students where StudentID=?"
+    select = "select StudentID from Students"
+    IDs = inspectID(db_name,select)
+    Continue = True
+    try:
+        if len(IDs) != 0:
+            print("StudentIDs in Students:")
+            for each in IDs:
+                print(each)
+            while Continue:
+                userInput = input("Enter a valid StudentID or press Q to exit: ")
+                try:
+                    if int(userInput) in IDs:
+                        data = (int(userInput),)
+                        delete_data(db_name,sql,data)
+                        Continue = False
+                    else:
+                        print("Invalid StudentID")
+                except:
+                    userInput = userInput.upper()
+                    if userInput == "Q":
+                        Continue = False               
+    except:
+        print("No StudentIDs in Students")
 
 def userInput4(db_name):
     Continue = True
@@ -474,21 +691,21 @@ def userInput4(db_name):
         print()
         userInput = input()
         if userInput == "1":
-            insert_Classes_data(db_name)
+            delete_Classes_data(db_name)
         elif userInput == "2":
-            insert_ClassUnits_data(db_name)
+            delete_ClassUnits_data(db_name)
         elif userInput == "3":
-            insert_Units_data(db_name)
+            delete_Units_data(db_name)
         elif userInput == "4":
-            insert_UnitAssignments_data(db_name)
+            delete_UnitAssignments_data(db_name)
         elif userInput == "5":
-            insert_Assignments_data(db_name)
+            delete_Assignments_data(db_name)
         elif userInput == "6":
-            insert_Teachers_data(db_name)
+            delete_Teachers_data(db_name)
         elif userInput == "7":
-            insert_ClassStudents_data(db_name)
+            delete_ClassStudents_data(db_name)
         elif userInput == "8":
-            insert_Students_data(db_name)
+            delete_Students_data(db_name)
         else:
             userInput = userInput.upper()
             if userInput == "Q":
@@ -504,7 +721,7 @@ def main(db_name):
         print("Choose one of the following options: ")
         print("1. (Re)create a table")
         print("2. Enter data")
-        print("3. Update data")
+        print("3. Amend  data")
         print("4. Delete data")
         print("Q. Exit")
         print()
@@ -513,6 +730,8 @@ def main(db_name):
             userInput1(db_name)
         elif userInput == "2":
             userInput2(db_name)
+        elif userInput == "4":
+            userInput4(db_name)
         else:
             userInput = userInput.upper()
             if userInput == "Q" or userInput == "q":
