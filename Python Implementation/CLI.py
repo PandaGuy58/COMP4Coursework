@@ -461,7 +461,7 @@ def amend_Classes_data(db_name):
     IDs = inspectID(db_name,select)
     sql = "update Classes set ClassName=?, TeacherID=? where ClassID=?"
     Continue = True
-    ContinueTwo = True
+    ContinueTwo = False
     try:
         if len(IDs) != 0:
             print("ClassIDs in Classes:")
@@ -475,20 +475,31 @@ def amend_Classes_data(db_name):
                     try:
                         if int(validID) in IDs:
                             Continue = False
-                        else:
-                            print("Invalid ID")
+                            select = "select TeacherID from Teachers"
+                            IDs = inspectID(db_name,select)
+                            try:
+                                if len(IDs) != 0:
+                                    for each in IDs:
+                                        print(each)
+                                ContinueTwo = True
+                            except:
+                                print("No TeacherIDs in Teachers")
                     except:
-                        print("Invalid input")
-                        
-                            
+                        print("Invalid ClassID")
     except:
         print("No ClassIDs in Classes")
-        
+
+    while ContinueTwo:
+        validID2 = input("Enter a valid ID or Q to exit: ")
+        if int(validID2) in IDs:
+            pass
 
 def amend_ClassUnits_data(db_name):
     select = "select ClassUnitID from ClassUnits"
     IDs = inspectID(db_name,select)
     sql = "update ClassUnits set ClassID=?, UnitID=? where ClassUnitID=?"
+    Continue = True
+    
 
 def amend_Units_data(db_name):
     select = "select UnitID from Units"
@@ -827,6 +838,8 @@ def main(db_name):
             userInput1(db_name)
         elif userInput == "2":
             userInput2(db_name)
+        elif userInput == "3":
+            userInput3(db_name)            
         elif userInput == "4":
             userInput4(db_name)
         else:
