@@ -10,12 +10,11 @@ class Window(QMainWindow):
         super().__init__()
         self.setWindowTitle("Markbook")
 
+        #Actions
         self.teacher_login = QAction("Login as a teacher",self)
-        self.admin_login = QAction("Log in as an administrator",self)
-        
+        self.admin_login = QAction("Log in as an administrator",self)        
         self.open_database = QAction("Open Database",self)
-        self.close_database = QAction("Close Database",self)
-        
+        self.close_database = QAction("Close Database",self)        
         self.view_ClassUnits = QAction("View ClassUnits",self)
         self.view_Units = QAction("View Units",self)
         self.view_UnitAssignments = QAction("View UnitAssignments",self)
@@ -24,18 +23,75 @@ class Window(QMainWindow):
         self.view_ClassStudents = QAction("View ClassStudents",self)
         self.view_Students = QAction("View Students",self)
         self.view_Classes = QAction("View Classes",self)
-        
+
+        #Add menu to bar        
         self.menu = QMenuBar()
-        
-        
-        self.database_toolbar = QToolBar()
-        self.database_menu = self.menu.addMenu("Database")
-        self.data_menu = self.menu.addMenu("Data")
+        self.file_toolbar = QToolBar()
+        self.file_menu = self.menu.addMenu("File")
+        self.data_menu = self.menu.addMenu("View")
 
-        self.database_menu.addAction(self.open_database)
-        self.database_menu.addAction(self.close_database)
+        #add actions to menu
+        self.file_menu.addAction(self.open_database)
+        self.file_menu.addAction(self.close_database)
 
-        self.data_menu.addAction(self.view_data)
+        self.file_toolbar.addAction(self.open_database)
+        self.file_toolbar.addAction(self.close_database)
+
+        self.data_menu.addAction(self.view_ClassUnits)
+        self.data_menu.addAction(self.view_Units)
+        self.data_menu.addAction(self.view_UnitAssignments)
+        self.data_menu.addAction(self.view_Assignments)
+        self.data_menu.addAction(self.view_Teachers)
+        self.data_menu.addAction(self.view_ClassStudents)
+        self.data_menu.addAction(self.view_Students)
+        self.data_menu.addAction(self.view_Classes)      
+
+        self.addToolBar(self.file_toolbar)
+        self.setMenuBar(self.menu)
+
+
+
+
+        #triggers
+        self.open_database.triggered.connect(self.open_connection)
+
+    def open_connection(self):
+        path = QFileDialog.getOpenFileName()
+        self.connection = SQLConnection(path)
+        self.connection.open_database()
+
+class SQLConnection:
+    """An SQL Connection class"""
+
+    def __init__(self,path):
+        self.path = path
+        self.db = None
+
+    def open_database(self):
+        if self.db:
+            self.close_database()
+
+        self.db = QSqlDatabase.addDatabase("QSQLITE")
+        self.db.setDatabaseName(self.path)
+        opened_ok = self.db.open()
+        return opened_ok
+    
+    def close_database(self):
+        self.db.close()
+        QSqlDatabase.removeDatabase("Conn")
+
+    def closeEvent(self,event):
+        self.close_database()
+        
+    def find_products_by_number(self,values):
+        query = QSqlQuery()
+        query.prepare("""SELECT * FROM Product WHERE ProductID = ?""")
+        query.addBindValue(Values[0])
+        query.exec_()
+        return query
+
+
+
 
 if __name__ == "__main__":
     application = QApplication(sys.argv)

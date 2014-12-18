@@ -462,47 +462,43 @@ def amend_Classes_data(db_name):
     sql = "update Classes set ClassName=?, TeacherID=? where ClassID=?"
     Continue = True
     ContinueTwo = False
-    try:
-        if len(IDs) != 0:
-            print("ClassIDs in Classes:")
-            for each in IDs:
-                print(each)
-            while Continue:
-                validID = input("Enter a valid ID or Q to exit: ")
-                if validID.upper == "Q":
-                    Continue = False
-                else:
-                    try:
-                        if int(validID) in IDs:
-                            Continue = False
-                            select = "select TeacherID from Teachers"
-                            IDs = inspectID(db_name,select)
-                            try:
-                                if len(IDs) != 0:
-                                    print("TeacherIDs in Teachers:")
-                                    for each in IDs:
-                                        print(each)
-                                    ContinueTwo = True
-                            except:
-                                print("No TeacherIDs in Teachers")
-                        else:
-                            print("Invalid ID")
-                    except:
-                        print("Invalid input")
-    except:
-        print("No ClassIDs in Classes")
+    if len(IDs) != 0:
+        print("ClassIDs in Classes:")
+        for each in IDs:
+            print(each)
+        while Continue:
+            validID = input("Enter a valid ID or Q to exit: ")
+            if validID.upper() == "Q":
+                Continue = False
+            else:
+                try:
+                    if int(validID) in IDs:
+                        Continue = False
+                        select = "select TeacherID from Teachers"
+                        IDs = inspectID(db_name,select)
+                        try:
+                            if len(IDs) != 0:
+                                print("TeacherIDs in Teachers:")
+                                for each in IDs:
+                                    print(each)
+                                ContinueTwo = True
+                        except:
+                            print("No TeacherIDs in Teachers")
+                    else:
+                        print("Invalid ID")
+                except:
+                    print("Invalid input")
 
     while ContinueTwo:
-        validID2 = input("Enter a valid ID or Q to exit: ")
-        try:
-            if int(validID2) in IDs:
-                ClassName = input("Enter ClassName or Q to exit: ")
-                values = (ClassName,validID2,validID)
-                amend_data(db_name,sql,values)
-                ContinueTwo = False
-        except:
-            if validID2.upper() == "Q":
-                ContinueTwo = False
+        teacherID = input("Enter a valid ID or Q to exit: ")
+        if int(teacherID) in IDs:
+            ClassName = input("Enter ClassName or Q to exit: ")
+            values = (ClassName,int(teacherID),int(validID))
+            amend_data(db_name,sql,values)
+            ContinueTwo = False
+        else:
+            print("Invalid ID")
+
 
 def amend_ClassUnits_data(db_name):
     select = "select ClassUnitID from ClassUnits"
@@ -517,12 +513,12 @@ def amend_ClassUnits_data(db_name):
             for each in IDs:
                 print(each)
             while Continue:
-                validID = input("Enter a valid ID or Q to exit: ")
-                if validID.upper == "Q":
+                classUnitID = input("Enter a valid ID or Q to exit: ")
+                if classUnitID.upper() == "Q":
                     Continue = False
                 else:
                     try:
-                        if int(validID) in IDs:
+                        if int(classUnitID) in IDs:
                             Continue = False
                             select = "select ClassID from Classes"
                             IDs = inspectID(db_name,select)
@@ -541,13 +537,13 @@ def amend_ClassUnits_data(db_name):
     except:
         print("No ClassIDs in Classes")
 
-    while continueTwo:
-        validID2 = input("Enter a valid ID or Q to exit: ")
-        if validID2.upper == "Q":
+    while ContinueTwo:
+        classID = input("Enter a valid ID or Q to exit: ")
+        if classID.upper() == "Q":
             ContinueTwo = False
         else:
             try:
-                if int(validID2) in IDs:
+                if int(classID) in IDs:
                     ContinueTwo = False
                     select = "select UnitID from Units"
                     IDs = inspectID(db_name,select)
@@ -566,18 +562,15 @@ def amend_ClassUnits_data(db_name):
                 
     while ContinueThree:
         validID3 = input("Enter a valid ID or Q to exit: ")
-        if validID3.upper == "Q":
+        if validID3.upper() == "Q":
             ContinueThree = False
         else:
-            try:
-                if int(validID3) in IDs:
-                    ContinueThree = False
-                    values = (validID2,validID3,validID)
-                    amend_data(db_name,sql,values)
-                else:
-                    print("Invalid ID")
-            except:
-                print("Invalid input")
+            if int(validID3) in IDs:
+                ContinueThree = False
+                values = (int(classID),int(validID3),int(classUnitID))
+                amend_data(db_name,sql,values)
+            else:
+                print("Invalid ID")
 
 def amend_Units_data(db_name):
     select = "select UnitID from Units"
@@ -589,14 +582,14 @@ def amend_Units_data(db_name):
         print(each)
     while Continue:
         validID = input("Enter a valid ID or Q to exit")
-        if validID.upper == "Q":
+        if validID.upper() == "Q":
             Continue = False
         else:
             try:
-                if validID in IDs:
+                if int(validID) in IDs:
                     Continue = False
                     UnitName = input("Enter unit name: ")
-                    values = (UnitName,validID)
+                    values = (UnitName,int(validID))
                     amend_data(db_name,sql,values)
                 else:
                     print("Invalid ID")
@@ -606,49 +599,42 @@ def amend_Units_data(db_name):
 def amend_UnitAssignments_data(db_name):
     select = "select UnitAssignmentID from UnitAssignments"
     IDs = inspectID(db_name,select)
-    sql = "update UnitAssignments set UnitID=?, AssignmnentID=? where UnitAssignmentID=?"
-    Continue = True
-    while Continue:
+    sql = "update UnitAssignments set UnitID=?, AssignmentID=? where UnitAssignmentID=?"
     Continue = True
     ContinueTwo = False
     ContinueThree = False
-    try:
-        if len(IDs) != 0:
-            print("UnitAssignmentIDs in UnitAssignments: ")
-            for each in IDs:
-                print(each)
-            while Continue:
-                validID = input("Enter a valid ID or Q to exit: ")
-                if validID.upper == "Q":
-                    Continue = False
-                else:
-                    try:
-                        if int(validID) in IDs:
-                            Continue = False
-                            select = "select UnitID in Units"
-                            IDs = inspectID(db_name,select)
-                            try:
-                                if len(IDs) != 0:
-                                    print("UnitIDs in Units")
-                                    for each in IDs:
-                                        print(each)
-                                    ContinueTwo = True
-                            except:
-                                print("No UnitIDs in Units")
-                        else:
-                            print("Invalid ID")
-                    except:
-                        print("Invalid input")
-    except:
-        print("No UnitAssignmentIDs in UnitAssignments")
+    if len(IDs) != 0:
+        print("UnitAssignmentIDs in UnitAssignments: ")
+        for each in IDs:
+            print(each)
+        while Continue:
+            unitAssignmentID = input("Enter a valid ID or Q to exit: ")
+            if unitAssignmentID.upper() == "Q":
+                Continue = False
+            else:
+                    if int(unitAssignmentID) in IDs:
+                        Continue = False
+                        select = "select UnitID from Units"
+                        IDs = inspectID(db_name,select)
+                        try:
+                            if len(IDs) != 0:
+                                print("UnitIDs in Units")
+                                for each in IDs:
+                                    print(each)
+                                ContinueTwo = True
+                        except:
+                            print("No UnitIDs in Units")
+                    else:
+                        print("Invalid ID")
 
-    while continueTwo:
-        validID2 = input("Enter a valid ID or Q to exit: ")
-        if validID2.upper == "Q":
+
+    while ContinueTwo:
+        UnitID = input("Enter a valid ID or Q to exit: ")
+        if UnitID.upper() == "Q":
             ContinueTwo = False
         else:
             try:
-                if int(validID2) in IDs:
+                if int(UnitID) in IDs:
                     ContinueTwo = False
                     select = "select AssignmentID from Assignments"
                     IDs = inspectID(db_name,select)
@@ -666,40 +652,197 @@ def amend_UnitAssignments_data(db_name):
                 print("Invalid input")
                 
     while ContinueThree:
-        validID3 = input("Enter a valid ID or Q to exit: ")
-        if validID3.upper == "Q":
+        AssignmentID = input("Enter a valid ID or Q to exit: ")
+        if AssignmentID.upper() == "Q":
             ContinueThree = False
         else:
-            try:
-                if int(validID3) in IDs:
-                    ContinueThree = False
-                    values = (validID2,validID3,validID)
-                    amend_data(db_name,sql,values)
-                else:
-                    print("Invalid ID")
-            except:
-                print("Invalid input")
+            if int(AssignmentID) in IDs:
+                ContinueThree = False
+                values = (int(UnitID),int(AssignmentID),int(unitAssignmentID))
+                amend_data(db_name,sql,values)
+            else:
+                print("Invalid ID")
         
 
 def amend_Assignments_data(db_name):
     select = "select AssignmentID from Assignments"
     IDs = inspectID(db_name,select)
     sql = "update Assignments set AssignmentName=?, AssignmentMark=?, AssignmentMaxMark=? where AssignmentID=?"
+    messages = ["Enter the AssignmentName or Q to exit: ","Enter the AssignmentMark or Q to exit: ","Enter the AssignmentMaxMark or Q to exit: "]
+    ContinueZero = True
+    Continue = False
+    ContinueTwo = True
+    List = []
+    try:
+        if len(IDs) != 0:
+            print("AssignmentID in Assignments: ")
+            for each in IDs:
+                print(each)
+            while ContinueZero:
+                AssignmentID = input("Insert valid AssignmentID or Q to exit: ")
+                if AssignmentID.upper() == "Q":
+                    ContinueZero = False
+                else:
+                    try:
+                        if int(AssignmentID) in IDs:
+                            Continue = True
+                            ContinueZero = False
+                        else:
+                            print("Invalid ID")
+                    except:
+                        print("You must enter an integer")
+    except:
+        print("No AssignmentIDs in Assignments")
+    if Continue:
+        userInput = input(messages[0])
+        if userInput.upper() != "Q":
+            List.append(userInput)
+            while  Continue:
+                userInput = input(messages[1])
+                if userInput.upper() == "Q":
+                    Continue = False
+                else:
+                    try:
+                        List.append(int(userInput))
+                        Continue = False
+                        while ContinueTwo:
+                            userInput = input(messages[2])
+                            if userInput.upper() == "Q":
+                                Continue = False
+                            else:
+                                try:
+                                    List.append(int(userInput))
+                                    ContinueTwo = False
+                                    values = (List[0],List[1],List[2],int(AssignmentID))
+                                    insert_data(sql,values,db_name)
+                                except:
+                                    print("You must enter an integer")
+                    except:
+                        print("You must enter an integer")
+        
 
 def amend_Teachers_data(db_name):
     select = "select TeacherID from Teachers"
     IDs = inspectID(db_name,select)
     sql = "update Teachers set TeacherName=?, TeacherSurname=? where TeacherID=?"
+    print("TeacherIDs in Teachers: ")
+    Continue = True
+    for each in IDs:
+        print(each)
+    while Continue:
+        validID = input("Enter a valid ID or Q to exit")
+        if validID.upper() == "Q":
+            Continue = False
+        else:
+            try:
+                if int(validID) in IDs:
+                    Continue = False
+                    teacherName = input("Enter TeacherName: ")
+                    teacherSurname = input("Enter TeacherSurname: ")
+                    values = (teacherName,teacherSurname,int(validID))
+                    amend_data(db_name,sql,values)
+                else:
+                    print("Invalid ID")
+            except:
+                print("Invalid input")
+
 
 def amend_ClassStudents_data(db_name):
     select = "select ClassStudentID from ClassStudents"
     IDs = inspectID(db_name,select)
     sql = "update ClassStudents set ClassID=?, StudentID=? where ClassStudentID=?"
+    Continue = True
+    ContinueTwo = False
+    ContinueThree = False
+    try:
+        if len(IDs) != 0:
+            print("ClassStudentIDs in ClassStudents: ")
+            for each in IDs:
+                print(each)
+            while Continue:
+                ClassStudentID = input("Enter a valid ID or Q to exit: ")
+                if ClassStudentID.upper() == "Q":
+                    Continue = False
+                else:
+                    try:
+                        if int(ClassStudentID) in IDs:
+                            Continue = False
+                            select = "select ClassID from Classes"
+                            IDs = inspectID(db_name,select)
+                            try:
+                                if len(IDs) != 0:
+                                    print("ClassIDs in Classes")
+                                    for each in IDs:
+                                        print(each)
+                                    ContinueTwo = True
+                            except:
+                                print("No ClassIDs in Classes")
+                        else:
+                            print("Invalid ID")
+                    except:
+                        print("Invalid input")
+    except:
+        print("No ClassStudentIDs in ClassStudents ")
+
+    while ContinueTwo:
+        ClassID = input("Enter a valid ID or Q to exit: ")
+        if ClassID.upper() == "Q":
+            ContinueTwo = False
+        else:
+            try:
+                if int(ClassID) in IDs:
+                    ContinueTwo = False
+                    select = "select StudentID from Students"
+                    IDs = inspectID(db_name,select)
+                    try:
+                        if len(IDs) != 0:
+                            print("StudentIDs in Students:")
+                            for each in IDs:
+                                print(each)
+                            ContinueThree = True
+                    except:
+                        print("No StudentIDs in Students")
+                else:
+                    print("Invalid ID")
+            except:
+                print("Invalid input")
+                
+    while ContinueThree:
+        StudentID = input("Enter a valid ID or Q to exit: ")
+        if StudentID.upper() == "Q":
+            ContinueThree = False
+        else:
+            try:
+                if int(StudentID) in IDs:
+                    ContinueThree = False
+                    values = (int(ClassID),int(StudentID),int(ClassStudentID))
+                    amend_data(db_name,sql,values)
+                else:
+                    print("Invalid ID")
+            except:
+                print("Invalid input")
 
 def amend_Students_data(db_name):
     select = "select StudentID from Students"
     IDs = inspectID(db_name,select)
-    sql = "update Students StudentName=?, StudentSurname=? where StudentID=?"
+    sql = "update Students set StudentName=?, StudentSurname=? where StudentID=?"
+    print("StudentIDs in Students: ")
+    Continue = True
+    for each in IDs:
+        print(each)
+    while Continue:
+        validID = input("Enter a valid ID or Q to exit")
+        if validID.upper() == "Q":
+            Continue = False
+        else:
+                if int(validID) in IDs:
+                    Continue = False
+                    StudentName = input("Enter StudentName: ")
+                    StudentSurname = input("Enter StudentSurname: ")
+                    values = (StudentName,StudentSurname,int(validID))
+                    amend_data(db_name,sql,values)
+                else:
+                    print("Invalid ID")
 
 def userInput3(db_name):
     Continue = True
