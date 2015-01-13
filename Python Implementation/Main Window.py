@@ -9,6 +9,9 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Markbook")
+        self.resize(900,800)
+        self.icon = QIcon(QPixmap("/icon.jpg"))
+        self.setWindowIcon(self.icon)
 
         #Actions
         self.teacher_login = QAction("Login as a teacher",self)
@@ -49,9 +52,6 @@ class Window(QMainWindow):
         self.addToolBar(self.file_toolbar)
         self.setMenuBar(self.menu)
 
-
-
-
         #triggers
         self.open_database.triggered.connect(self.open_connection)
 
@@ -89,9 +89,6 @@ class SQLConnection:
         query.addBindValue(Values[0])
         query.exec_()
         return query
-
-
-
 
 if __name__ == "__main__":
     application = QApplication(sys.argv)
