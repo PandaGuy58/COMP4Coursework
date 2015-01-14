@@ -60,6 +60,9 @@ class Window(QMainWindow):
         self.connection = SQLConnection(path)
         self.connection.open_database()
 
+    def close_connection(self):
+            
+
 class SQLConnection:
     """An SQL Connection class"""
 
@@ -82,16 +85,6 @@ class SQLConnection:
 
     def closeEvent(self,event):
         self.close_database()
-        
-    def find_products_by_number(self,values):
-        query = QSqlQuery()
-        query.prepare("""SELECT * FROM Product WHERE ProductID = ?""")
-        query.addBindValue(Values[0])
-        query.exec_()
-        return query
-
-
-
 
 if __name__ == "__main__":
     application = QApplication(sys.argv)
