@@ -61,6 +61,7 @@ class Window(QMainWindow):
         self.connection.open_database()
 
     def close_connection(self):
+        pass
             
 
 class SQLConnection:
